@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
+body {
+    font-family: Arial, sans-serif;    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(254, 221, 241);
+}
+
+
+.img img {
+    width: 0px; 
+    height: auto; 
+}
+
+.form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+input {
+    margin: 10px, 10px ;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    width: 90%;
+}
+
+button {
+    background: #ff029e;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 89%;
+}
+
+button:hover {
+    background: #d3007b;
+}
+
+.forgot-password {
+    color: #ff758c;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+
+.cadastro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 0, 149);
+    font-size: 3rem;
+    font-weight: 700;
+    width: 22ch;
+    animation:typing 3s;
+}
+
+.cadastro span {
+    color: #ff5a78;
+}
+
+.container {
+    display: flex;
+    background: rgb(250, 216, 235);
+    padding: 20px;
+    border-radius: 70px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 340px;
+    gap: 15px;
+    font-size: 3rem;
+    font-weight: 700;
+    width: 22ch;
+    animation:  
+                    typing 3s;
+}
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    40% {
+        width: 22ch;
+    }
+    
+}

@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    background: white;
+    width: 90%;
+    max-width: 1000px;
+    padding: 12px 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+}
+
+.profile-pic img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+header input {
+    flex: 1;
+    margin: 0 15px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 2px solid #e0e0e0;
+    outline: none;
+}
+
+header input:focus {
+    border-color: #ff5a78;
+}
+
+#logoutButton {
+    background: linear-gradient(90deg, #ff5a78, #ff029e);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+main {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+.post-container {
+    background: white;
+    width: 100%;
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.post-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.post-content img {
+    width: 100%;
+    border-radius: 10px;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.post-text {
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.comment-section {
+    margin-top: 20px;
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.comment-btn {
+    background: linear-gradient(90deg, #ff5a78, #ff029e);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.comments p {
+    margin: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.like {
+    margin-top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+}
+
+.like:hover {
+    color: #ff5a78;
+}
+
+.delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}

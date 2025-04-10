@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinkle</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="icon" href="icon (2).png">
+</head>
+<body>
+    <header>
+        <div class="profile-pic">
+            <img src="./img/user-avatar.jpg" alt="Perfil" id="userAvatar">
+        </div>
+        <input type="text" placeholder="Pesquisar...">
+        <div class="user-icon">
+            <button id="logoutButton">Sair</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Template de Post (oculto) -->
+        <div class="post-container" id="postTemplate" style="display: none;">
+            <div class="post-header">
+                <img class="post-profile" alt="Foto de perfil">
+                <span class="post-username">Nome</span>
+                <span class="date">Data</span>
+            </div>
+            <div class="post-content">
+                <img class="post-image" alt="Imagem do post">
+                <div class="post-text">
+                    <p class="post-author"><strong>Nome</strong></p>
+                    <p class="post-description">Descrição</p>
+                </div>
+            </div>
+            <div class="comment-section">
+                <div class="comment-input-container">
+                    <input type="text" placeholder="Digite seu comentário..." class="comment-input">
+                    <button class="comment-btn">Comentar</button>
+                </div>
+                <div class="comments"></div>
+            </div>
+            <div class="like">❤️ 0</div>
+            <button class="delete-btn">Excluir</button>
+        </div>
+    </main>
+
+    <script src="home.js"></script>
+</body>
+</html>
