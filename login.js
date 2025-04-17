@@ -9,16 +9,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const senha = document.getElementById("password").value.trim();
             const message = document.getElementById("message");
 
-            message.textContent = ""; // Limpa mensagens anteriores
+            message.textContent = "";
 
-            // Validação: Campos vazios
             if (!email || !senha) {
                 message.textContent = "Preencha todos os campos!";
                 message.style.color = "red";
                 return;
             }
 
-            // Validação de formato de e-mail
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 message.textContent = "Insira um email válido!";
@@ -26,9 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Criando o objeto com os dados corretos
-            const userData = { email: email, senha: senha };
-            console.log("Enviando para API:", userData);
+            const userData = { email, senha };
 
             try {
                 const response = await fetch("https://back-spider.vercel.app/login", {
@@ -36,20 +32,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(userData) // Convertendo para JSON
+                    body: JSON.stringify(userData)
                 });
 
                 const data = await response.json();
-                console.log("Resposta da API:", data);
 
                 if (response.ok) {
                     message.textContent = "Login realizado com sucesso!";
                     message.style.color = "green";
 
-                    // 🔐 Aqui salvamos os dados no localStorage
+                    // Salva o token corretamente no localStorage
                     localStorage.setItem("usuarioLogado", JSON.stringify(data));
 
-                    // Redireciona após 1s
                     setTimeout(() => {
                         window.location.href = "home.html";
                     }, 1000);

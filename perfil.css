@@ -1,7 +1,7 @@
-body {
+body { 
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 1rem;
+    padding: 0;
     background-color: #f0f2f5;
 }
 
@@ -10,13 +10,24 @@ header {
     padding: 1rem;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+main {
+    max-width: 900px;
+    margin: 2rem auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 2rem;
 }
 
 .perfil-info {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .perfil-info img {
@@ -24,13 +35,17 @@ header {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.perfil-info h2 {
+    margin: 0;
 }
 
 .publicacoes-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1rem;
-    padding: 1rem;
 }
 
 .publicacao {
@@ -38,10 +53,12 @@ header {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 .publicacao img {
     width: 100%;
+    height: auto;
     border-radius: 8px;
     margin-bottom: 0.5rem;
 }
