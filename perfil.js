@@ -1,76 +1,51 @@
-const USERS_API = "https://back-spider.vercel.app/user/listarUsers";
-const PUBLICACOES_API = "https://back-spider.vercel.app/publicacoes/listarPublicacoes";
+const userId = 1; 
 
-// Recupera o token salvo corretamente
-const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-const userToken = usuarioLogado?.token;
+const nomeUsuarioEl = document.getElementById("nomeUsuario");
+const fotoPerfilEl = document.getElementById("fotoPerfil");
+const publicacoesContainer = document.getElementById("publicacoesContainer");
 
-function obterUserIdDoToken(token) {
-    try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        return payload.userId || payload.id; // depende do que a API retorna no token
-    } catch (error) {
-        console.error("Erro ao decodificar token:", error);
-        return null;
-    }
+
+async function carregarUsuario(id) {
+  try {
+    const response = await fetch(`https://back-spider.vercel.app/user/pesquisarUser/${id}`);
+    const usuario = await response.json();
+
+    nomeUsuarioEl.textContent = usuario.nome || "Usuário sem nome";
+    fotoPerfilEl.src = usuario.foto || "img/default.png";
+  } catch (error) {
+    console.error("Erro ao carregar o usuário:", error);
+    nomeUsuarioEl.textContent = "Erro ao carregar";
+  }
 }
 
-async function carregarPerfil() {
-    const userId = obterUserIdDoToken(userToken);
-    if (!userId) {
-        console.warn("Usuário não autenticado.");
-        return;
+async function carregarPublicacoesDoUsuario(id) {
+  try {
+    const response = await fetch("https://back-spider.vercel.app/publicacoes/listarPublicacoes");
+    const publicacoes = await response.json();
+
+    const minhasPublicacoes = publicacoes.filter(pub => pub.idUsuario == id);
+
+    if (minhasPublicacoes.length === 0) {
+      publicacoesContainer.innerHTML = "<p>Você ainda não tem publicações.</p>";
+      return;
     }
 
-    try {
-        // Busca dados dos usuários
-        const usersResponse = await fetch(USERS_API, {
-            headers: {
-                "Authorization": `Bearer ${userToken}`,
-            }
-        });
+    minhasPublicacoes.forEach(pub => {
+      const pubEl = document.createElement("div");
+      pubEl.className = "publicacao";
 
-        const usuarios = await usersResponse.json();
-        const usuario = usuarios.find(u => u.id === userId);
+      pubEl.innerHTML = `
+        ${pub.imagem ? `<img src="${pub.imagem}" alt="Imagem da publicação">` : ""}
+        <p>${pub.descricao || "Sem descrição"}</p>
+      `;
 
-        // Preenche nome e imagem do perfil
-        if (usuario) {
-            document.getElementById("nomeUsuario").textContent = usuario.nome || "Usuário";
-            document.getElementById("fotoPerfil").src = usuario.fotoPerfil || "./img/default.png";
-        }
-
-        // Busca publicações
-        const pubResponse = await fetch(PUBLICACOES_API, {
-            headers: {
-                "Authorization": `Bearer ${userToken}`,
-            }
-        });
-
-        const publicacoes = await pubResponse.json();
-        const minhasPub = publicacoes.filter(p => p.userId === userId || p.idUsuario === userId);
-
-        // Exibe publicações
-        const container = document.getElementById("publicacoesContainer");
-        container.innerHTML = "";
-        if (minhasPub.length === 0) {
-            container.innerHTML = "<p>Você ainda não fez publicações.</p>";
-            return;
-        }
-
-        minhasPub.forEach(pub => {
-            const div = document.createElement("div");
-            div.className = "publicacao";
-            div.innerHTML = `
-                ${pub.imagemUrl ? `<img src="${pub.imagemUrl}" alt="Publicação">` : ""}
-                <h4>${pub.titulo || "Sem título"}</h4>
-                <p>${pub.conteudo || pub.descricao || "Sem conteúdo"}</p>
-            `;
-            container.appendChild(div);
-        });
-
-    } catch (error) {
-        console.error("Erro ao carregar perfil:", error);
-    }
+      publicacoesContainer.appendChild(pubEl);
+    });
+  } catch (error) {
+    console.error("Erro ao carregar publicações:", error);
+    publicacoesContainer.innerHTML = "<p>Erro ao carregar publicações.</p>";
+  }
 }
 
-carregarPerfil();
+carregarUsuario(userId);
+carregarPublicacoesDoUsuario(userId);
