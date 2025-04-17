@@ -1,69 +1,89 @@
-const USERS_API = "https://back-spider.vercel.app/user/listarUsers";
-const PUBLICACOES_API = "https://back-spider.vercel.app/publicacoes/listarPublicacoes";
-const userToken = localStorage.getItem("token");
+'use strict'
 
-// Decodifica o token para obter o userId
-function obterUserIdDoToken(token) {
-    try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        return payload.userId;
-    } catch (error) {
-        console.error("Erro ao decodificar token:", error);
-        return null;
-    }
-}
+// Seleciona a seção de perfil
+const profileSection = document.querySelector('.profile-section');
 
-async function carregarPerfil() {
-    const userId = obterUserIdDoToken(userToken);
-    if (!userId) return;
+// Cria o cabeçalho do perfil
+const profileHeader = document.createElement('div');
+profileHeader.className = 'profile-header';
+profileSection.appendChild(profileHeader);
 
-    try {
-        // Busca dados do usuário
-        const usersResponse = await fetch(USERS_API, {
-            headers: {
-                "Authorization": `Bearer ${userToken}`,
-            }
-        });
-        const usuarios = await usersResponse.json();
-        const usuario = usuarios.find(u => u.id === userId);
+// Cria o nome de usuário
+const username = document.createElement('div');
+username.className = 'username';
+username.textContent = 'Drake';
+profileHeader.appendChild(username);
 
-        // Preenche nome e imagem
-        if (usuario) {
-            document.getElementById("nomeUsuario").textContent = usuario.nome || "Usuário";
-            document.getElementById("fotoPerfil").src = usuario.fotoPerfil || "./img/default.png";
-        }
+// Cria o handle (@)
+const handle = document.createElement('div');
+handle.className = 'handle';
+handle.textContent = '@Drake_Malvadão';
+profileHeader.appendChild(handle);
 
-        // Busca publicações
-        const pubResponse = await fetch(PUBLICACOES_API, {
-            headers: {
-                "Authorization": `Bearer ${userToken}`,
-            }
-        });
-        const publicacoes = await pubResponse.json();
-        const minhasPub = publicacoes.filter(p => p.userId === userId);
+// Cria as estatísticas
+const stats = document.createElement('div');
+stats.className = 'stats';
 
-        // Exibe publicações
-        const container = document.getElementById("publicacoesContainer");
-        container.innerHTML = "";
-        if (minhasPub.length === 0) {
-            container.innerHTML = "<p>Você ainda não fez publicações.</p>";
-            return;
-        }
+// Seguidores
+const followersStat = document.createElement('div');
+followersStat.className = 'stat';
+const followersValue = document.createElement('div');
+followersValue.className = 'stat-value';
+followersValue.textContent = '69';
+const followersLabel = document.createElement('div');
+followersLabel.className = 'stat-label';
+followersLabel.textContent = 'Seguidores';
+followersStat.appendChild(followersValue);
+followersStat.appendChild(followersLabel);
+stats.appendChild(followersStat);
 
-        minhasPub.forEach(pub => {
-            const div = document.createElement("div");
-            div.className = "publicacao";
-            div.innerHTML = `
-                ${pub.imagemUrl ? `<img src="${pub.imagemUrl}" alt="Publicação">` : ""}
-                <h4>${pub.titulo || "Sem título"}</h4>
-                <p>${pub.conteudo || "Sem conteúdo"}</p>
-            `;
-            container.appendChild(div);
-        });
+// Seguindo
+const followingStat = document.createElement('div');
+followingStat.className = 'stat';
+const followingValue = document.createElement('div');
+followingValue.className = 'stat-value';
+followingValue.textContent = '13';
+const followingLabel = document.createElement('div');
+followingLabel.className = 'stat-label';
+followingLabel.textContent = 'Seguindo';
+followingStat.appendChild(followingValue);
+followingStat.appendChild(followingLabel);
+stats.appendChild(followingStat);
 
-    } catch (error) {
-        console.error("Erro ao carregar perfil:", error);
-    }
-}
+// Posts
+const postsStat = document.createElement('div');
+postsStat.className = 'stat';
+const postsValue = document.createElement('div');
+postsValue.className = 'stat-value';
+postsValue.textContent = '28';
+const postsLabel = document.createElement('div');
+postsLabel.className = 'stat-label';
+postsLabel.textContent = 'Posts';
+postsStat.appendChild(postsValue);
+postsStat.appendChild(postsLabel);
+stats.appendChild(postsStat);
 
-carregarPerfil();
+profileHeader.appendChild(stats);
+
+// Divisor
+const divider = document.createElement('div');
+divider.className = 'divider';
+profileSection.appendChild(divider);
+
+// Nome do perfil (repetido 3 vezes)
+const profileName = document.createElement('div');
+profileName.className = 'profile-name';
+
+const name1 = document.createElement('span');
+name1.textContent = 'Drake';
+profileName.appendChild(name1);
+
+const name2 = document.createElement('span');
+name2.textContent = 'Drake';
+profileName.appendChild(name2);
+
+const name3 = document.createElement('span');
+name3.textContent = 'Drake';
+profileName.appendChild(name3);
+
+profileSection.appendChild(profileName);
