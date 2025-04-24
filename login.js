@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     const loginButton = document.getElementById("login-button");
 
@@ -19,8 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
+            // Validação simples de e-mail
+            function emailValido(email) {
+                return email.includes("@") && email.split("@")[1]?.includes(".");
+            }
+
+            if (!emailValido(email)) {
                 message.textContent = "Insira um email válido!";
                 message.style.color = "red";
                 return;
@@ -43,8 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     message.textContent = "Login realizado com sucesso!";
                     message.style.color = "green";
 
-                    // Salva o ID do usuário no localStorage
-                    localStorage.setItem("idUser", data.id);  // Salva apenas o ID
+                    localStorage.setItem("idUser", data.id);
 
                     setTimeout(() => {
                         window.location.href = "home.html";
@@ -74,15 +76,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             message.textContent = "";
 
-            // Validação de campos
+            
             if (!email || !senha) {
                 message.textContent = "Preencha todos os campos!";
                 message.style.color = "red";
                 return;
             }
 
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
+            //verificar se é um email
+            function emailValido(email) {
+                return email.includes("@") && email.split("@")[1]?.includes(".");
+            }
+
+            if (!emailValido(email)) {
                 message.textContent = "Insira um email válido!";
                 message.style.color = "red";
                 return;
@@ -105,8 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     message.textContent = "Login realizado com sucesso!";
                     message.style.color = "green";
 
-                    // Salva o ID do usuário no localStorage
-                    localStorage.setItem("idUser", data.id);  // Salva apenas o ID
+                    localStorage.setItem("idUser", data.id);
 
                     setTimeout(() => {
                         window.location.href = "home.html";

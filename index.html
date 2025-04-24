@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pinkle</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="login.js"></script> 
+    <script defer src="login.js" defer></script>
     <link rel="icon" href="icon (2).png">
 </head>
 <body>
@@ -14,13 +14,12 @@
     <div class="container">
         <div class="form-container" id="login-form">
             <div class="login">LogIn</div>
-            <input type="text" id="email" placeholder="Email">
-            <input type="password" id="password" placeholder="Senha">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Senha" required>
             <button id="login-button">Entrar</button>
             <p id="message"></p>
             <button><a href="cadastro.html">Não tenho conta</a></button>
             <p><a href="recuperacao1.html" class="forgot-password">Esqueci a senha</a></p>
-            <p id="message"></p> <!-- Para exibir mensagens de erro/sucesso -->
         </div>
     </div>
 </body>

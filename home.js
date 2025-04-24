@@ -1,23 +1,32 @@
 const API_BASE_URL = "https://back-spider.vercel.app/publicacoes";
 const API_USERS_URL = "https://back-spider.vercel.app/user/listarUsers";
 
+function toast(mensagem, cor = "#ff5a78") {
+    Toastify({
+        text: mensagem,
+        duration: 3000,
+        gravity: "bottom",
+        position: "center",
+        backgroundColor: cor,
+        stopOnFocus: true,
+    }).showToast();
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
-    //aqui recupera os dados do usario que esta logado
+    // recupera os dados do usuário logado
     const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
 
     if (usuarioLogado) {
-  
         const avatar = document.getElementById("userAvatar");
         if (avatar) {
             avatar.src = usuarioLogado.imagemPerfil;
         }
     }
 
-    //carrega os posts
+    // carrega os posts
     carregarPublicacoes();
 });
 
-// publicações
 async function carregarPublicacoes() {
     try {
         const [resPublicacoes, resUsuarios] = await Promise.all([
@@ -35,7 +44,7 @@ async function carregarPublicacoes() {
         const main = document.querySelector("main");
         const template = document.querySelector("#postTemplate");
 
-        // "carrega o "novo" post "
+        // remove posts antigos e deixa a estrutura
         main.querySelectorAll(".post-container:not(#postTemplate)").forEach(e => e.remove());
 
         publicacoes.forEach(publicacao => {
@@ -52,14 +61,14 @@ async function carregarPublicacoes() {
             post.querySelector(".post-author").innerHTML = `<strong>${usuario.nome || "Usuário"}</strong>`;
             post.querySelector(".post-description").textContent = publicacao.descricao;
 
-            //comenta
+            // comentários
             const comentariosContainer = post.querySelector(".comments");
             comentariosContainer.innerHTML = (publicacao.comentarios || []).map(comentario => {
                 const autor = usuarios.find(u => u.id == comentario.idUsuario);
                 return `<p><strong>${autor?.nome || "Anônimo"}</strong>: ${comentario.descricao}</p>`;
             }).join("") || "<p>Sem comentários ainda.</p>";
 
-            //curtidaa
+            // curtidas
             const likeBtn = post.querySelector(".like");
             likeBtn.textContent = `❤️ ${publicacao.curtidas?.length || 0}`;
             likeBtn.onclick = () => {
@@ -67,19 +76,21 @@ async function carregarPublicacoes() {
                     const u = usuarios.find(u => u.id == c.idUsuario);
                     return u?.nome || "Desconhecido";
                 });
-                alert(nomes.length > 0 ? `Curtido por:\n${nomes.join("\n")}` : "Ninguém curtiu ainda.");
+                toast(nomes.length > 0
+                    ? `Curtido por:\n${nomes.join(", ")}`
+                    : "Ninguém curtiu ainda.");
             };
 
-            //comentar
+            // comentar
             post.querySelector(".comment-btn").onclick = () => {
                 const input = post.querySelector(".comment-input");
-                alert(`Comentário em ${publicacao.id}: ${input.value}`);
+                toast(`Comentário em ${publicacao.id}: ${input.value}`);
                 input.value = "";
             };
 
-            //excluir
+            // excluir
             post.querySelector(".delete-btn").onclick = () => {
-                alert(`Excluir publicação ${publicacao.id} (simulação)`);
+                toast(`Excluir publicação ${publicacao.id} (simulação)`, "red");
             };
 
             main.appendChild(post);
@@ -87,5 +98,6 @@ async function carregarPublicacoes() {
 
     } catch (erro) {
         console.error("Erro ao carregar publicações:", erro);
+        toast("Erro ao carregar publicações.", "red");
     }
 }
